@@ -41,6 +41,19 @@ FIND_PATH(GLFW_INCLUDE_DIRS GLFW/glfw3.h DOC "Path to GLFW include directory."
 
 SET(GLFW_LIB_NAMES libglfw3.a glfw3 glfw GLFW3.lib)
 
+if(MSVC10)
+	set(LIBDIR_WIN "lib-msvc100/release")
+endif(MSVC10)
+if(MSVC11)
+	set(LIBDIR_WIN "lib-vc2012")
+endif(MSVC11)
+if(MSVC12)
+	set(LIBDIR_WIN "lib-vc2013")
+endif(MSVC12)
+if(MSVC14)
+	set(LIBDIR_WIN "lib-vc2015")
+endif(MSVC14)
+
 FIND_LIBRARY(GLFW_LIBRARY DOC "Absolute path to GLFW library."
   NAMES ${GLFW_LIB_NAMES}
   HINTS
@@ -49,7 +62,7 @@ FIND_LIBRARY(GLFW_LIBRARY DOC "Absolute path to GLFW library."
   PATHS
   /usr/local/lib
   /usr/lib
-  ${GLFW_ROOT_DIR}/lib-msvc100/release # added by ptr
+  ${GLFW_ROOT_DIR}/${LIBDIR_WIN}
   ${GLFW_ROOT_DIR}/lib
 )
 IF( APPLE )
