@@ -50,7 +50,15 @@ ENDIF()
   FOREACH(subdir ${children})
       IF ( "${subdir}" MATCHES "boost(.*)" )
         SET ( BOOST_ROOT ${BASE_BUILD_PATH}/${subdir}/ CACHE PATH "Path to Boost")
-        SET ( BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-10.0" )
+        if(MSVC10)
+          SET ( BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-10.0" )
+        endif(MSVC10)
+        if(MSVC12)
+          SET ( BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-12.0" )
+        endif(MSVC12)
+        if(MSVC14)
+          SET ( BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-14.0" )
+        endif(MSVC14)
      ENDIF()
   ENDFOREACH()    
   
@@ -158,7 +166,7 @@ TARGET_LINK_LIBRARIES ( openvdb debug
   ${Boost_THREAD_LIBRARY_DEBUG}
   ${TBB_LIBRARY_DEBUG}
   ${ILMBASE_HALF_LIBRARY_DEBUG}
-  ${OPENEXR_ILMIMF_LIBRARY_DEBUG}
+#  ${OPENEXR_ILMIMF_LIBRARY_DEBUG}
   ${ZLIB_LIBRARY}
   ${GLFW_LIBRARY}
   )
@@ -167,7 +175,7 @@ TARGET_LINK_LIBRARIES ( openvdb optimized
   ${Boost_THREAD_LIBRARY_RELEASE}
   ${TBB_LIBRARY}
   ${ILMBASE_HALF_LIBRARY_RELEASE}
-  ${OPENEXR_ILMIMF_LIBRARY_RELEASE}
+#  ${OPENEXR_ILMIMF_LIBRARY_RELEASE}
   ${ZLIB_LIBRARY}
   ${GLFW_LIBRARY}
   )
@@ -205,14 +213,14 @@ TARGET_LINK_LIBRARIES ( vdb_render debug
   openvdb  
   ${Ilmbase_ILMTHREAD_LIBRARY_DEBUG}
   ${Ilmbase_IEX_LIBRARY_DEBUG}
-  ${OPENEXR_ILMIMF_LIBRARY_DEBUG}
+#  ${OPENEXR_ILMIMF_LIBRARY_DEBUG}
   )
   
 TARGET_LINK_LIBRARIES ( vdb_render optimized
   openvdb  
   ${Ilmbase_ILMTHREAD_LIBRARY_RELEASE}
   ${Ilmbase_IEX_LIBRARY_RELEASE}
-  ${OPENEXR_ILMIMF_LIBRARY_RELEASE}
+#  ${OPENEXR_ILMIMF_LIBRARY_RELEASE}
   )
   
 # Copy required dlls to output path
